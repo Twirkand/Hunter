@@ -70,7 +70,7 @@ Este proyecto se encuentra actualmente en fase de diseño y planificación de ar
 
 ## 👤 Autor
 
-**Nauzet Torres Tejera**  
+**Twirkand**  
 Estudiante de Desarrollo de Aplicaciones Multiplataforma  
 
 ---
