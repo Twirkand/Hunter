@@ -3,10 +3,24 @@ PRAGMA foreign_keys = OFF;
 
 DELETE FROM monstruo;
 DELETE FROM sqlite_sequence;
+DELETE FROM anfibio;
+DELETE FROM bestia_de_colmillos;
+DELETE FROM carapaceon;
+DELETE FROM cephalopodo;
+DELETE FROM dragon_anciano;
+DELETE FROM leviatan;
+DELETE FROM neopteron;
+DELETE FROM semianciano;
+DELETE FROM temnoceran;
+DELETE FROM wyvern_bruto;
+DELETE FROM wyvern_de_colmillos;
+DELETE FROM wyvern_nadador;
+DELETE FROM wyvern_pajaro;
+DELETE FROM wyvern_serpiente;
+DELETE FROM wyvern_volador;
 
 PRAGMA foreign_keys = ON;
 
-BEGIN TRANSACTION;
 
 INSERT INTO monstruo (nombre, tipo, elemento, vida, primera_aparicion) VALUES
 
@@ -169,5 +183,3 @@ INSERT INTO monstruo (nombre, tipo, elemento, vida, primera_aparicion) VALUES
 ('Astalos Boltreaver','Wyvern volador','Rayo',8400,'MHGU'),
 ('Mizutsune Soulseer','Leviatán','Agua',8200,'MHGU'),
 ('Gammoth Elderfrost','Bestia de colmillos','Hielo',9500,'MHGU');
-
-COMMIT;
