@@ -2,6 +2,7 @@ package com.hunter.repositories.sqlite;
 
 import com.hunter.models.Objeto;
 import com.hunter.repositories.IObjetoRepository;
+import com.hunter.repositories.SqliteConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ public class ObjetoSqliteRepository implements IObjetoRepository {
 
     public ObjetoSqliteRepository(SqliteConnectionManager manager) {
         this.manager = manager;
-        new DatabaseInitializer(manager).createTables();
     }
 
     @Override

@@ -15,4 +15,8 @@ public interface IMonstruoRepository {
     boolean update(Monstruo monstruo);
 
     boolean delete(int id);
+
+    Monstruo findByNombre(String nombre);
+
+    List<Monstruo> findByTipo(String tipo);
 }

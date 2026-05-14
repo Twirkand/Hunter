@@ -15,4 +15,8 @@ public interface IMonstruoService {
     boolean actualizar(Monstruo monstruo);
 
     boolean eliminar(int id);
+
+    Monstruo obtenerPorNombre(String nombre);
+    
+    List<Monstruo> obtenerPorTipo(String tipo);
 }

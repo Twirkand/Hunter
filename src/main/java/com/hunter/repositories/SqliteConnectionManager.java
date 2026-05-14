@@ -4,16 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionManager {
+public class SqliteConnectionManager {
 
     private final String url;
 
-    public ConnectionManager() {
+    public SqliteConnectionManager() {
         this.url = "jdbc:sqlite:database/monsters.db";
         loadDriver();
     }
 
-    public ConnectionManager(String url) {
+    public SqliteConnectionManager(String url) {
         this.url = url;
         loadDriver();
     }

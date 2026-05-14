@@ -15,11 +15,11 @@
 /workspaces/Hunter/src/main/java/com/hunter/models/Objeto.java
 /workspaces/Hunter/src/main/java/com/hunter/models/Temnoceran.java
 /workspaces/Hunter/src/main/java/com/hunter/repositories/IDropRepository.java
-/workspaces/Hunter/src/main/java/com/hunter/repositories/ConnectionManager.java
 /workspaces/Hunter/src/main/java/com/hunter/repositories/sqlite/ObjetoSqliteRepository.java
 /workspaces/Hunter/src/main/java/com/hunter/Main.java
-/workspaces/Hunter/src/main/java/com/hunter/models/Cephalopod.java
 /workspaces/Hunter/src/main/java/com/hunter/models/DragonAnciano.java
+/workspaces/Hunter/src/main/java/com/hunter/repositories/SqliteConnectionManager.java
+/workspaces/Hunter/src/main/java/com/hunter/models/Cephalopodo.java
 /workspaces/Hunter/src/main/java/com/hunter/models/Monstruo.java
 /workspaces/Hunter/src/main/java/com/hunter/repositories/sqlite/DropSqliteRepository.java
 /workspaces/Hunter/src/main/java/com/hunter/models/Leviatan.java

@@ -1,8 +1,8 @@
 package com.hunter.repositories.sqlite;
 
 import com.hunter.models.Monstruo;
-import com.hunter.repositories.ConnectionManager;
-import com.hunter.repositories.interfaces.IMonstruoRepository;
+import com.hunter.repositories.SqliteConnectionManager;
+import com.hunter.repositories.IMonstruoRepository;
 import com.hunter.factories.MonstruoFactory;
 
 import java.sql.*;
@@ -11,9 +11,9 @@ import java.util.List;
 
 public class MonstruoSqliteRepository implements IMonstruoRepository {
 
-    private final ConnectionManager manager;
+    private final SqliteConnectionManager manager;
 
-    public MonstruoSqliteRepository(ConnectionManager manager) {
+    public MonstruoSqliteRepository(SqliteConnectionManager manager) {
         this.manager = manager;
     }
 
@@ -36,14 +36,14 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
                         rs.getString("tipo"),
                         rs.getString("elemento"),
                         rs.getInt("vida"),
-                        rs.getString("primera_aparicion"),
-                        0));
+                        rs.getString("primera_aparicion")));
             }
 
             return lista;
 
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 
@@ -63,14 +63,14 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
                 return null;
 
             return MonstruoFactory.crear(
-        rs.getInt("id"),
-        rs.getString("nombre"),
-        rs.getString("tipo"),
-        rs.getString("elemento"),
-        rs.getInt("vida"),
-        rs.getString("primera_aparicion"),
-        0
-);
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("tipo"),
+                    rs.getString("elemento"),
+                    rs.getInt("vida"),
+                    rs.getString("primera_aparicion")
+
+            );
 
         } catch (Exception e) {
             return null;
@@ -83,7 +83,7 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
         String sql = "INSERT INTO monstruo(nombre, tipo, elemento, vida, primera_aparicion) VALUES (?,?,?,?,?)";
 
         try (Connection conn = manager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, m.getNombre());
             stmt.setString(2, m.getTipo());
@@ -91,9 +91,18 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
             stmt.setInt(4, m.getVida());
             stmt.setString(5, m.getPrimeraAparicion());
 
-            return stmt.executeUpdate() > 0;
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+
+            insertarTipo(conn, m.getTipo(), id);
+
+            return true;
 
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -134,6 +143,97 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
 
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @Override
+    public Monstruo findByNombre(String nombre) {
+
+        String sql = "SELECT * FROM monstruo WHERE LOWER(nombre) = LOWER(?)";
+
+        try (Connection conn = manager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, nombre);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (!rs.next())
+                return null;
+
+            return MonstruoFactory.crear(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("tipo"),
+                    rs.getString("elemento"),
+                    rs.getInt("vida"),
+                    rs.getString("primera_aparicion"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void insertarTipo(Connection conn, String tipo, int id) throws SQLException {
+
+        switch (tipo) {
+
+            case "Wyvern Volador":
+                try (PreparedStatement ps = conn.prepareStatement(
+                        "INSERT INTO wyvern_volador (id, variantes) VALUES (?, 0)")) {
+                    ps.setInt(1, id);
+                    ps.executeUpdate();
+                }
+                break;
+
+            case "Leviatan":
+                try (PreparedStatement ps = conn.prepareStatement(
+                        "INSERT INTO leviatan (id, variantes) VALUES (?, 0)")) {
+                    ps.setInt(1, id);
+                    ps.executeUpdate();
+                }
+                break;
+
+            case "Dragon Anciano":
+                try (PreparedStatement ps = conn.prepareStatement(
+                        "INSERT INTO dragon_anciano (id, variantes) VALUES (?, 0)")) {
+                    ps.setInt(1, id);
+                    ps.executeUpdate();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public List<Monstruo> findByTipo(String tipo) {
+
+        String sql = "SELECT * FROM monstruo WHERE LOWER(tipo) = LOWER(?)";
+
+        try (Connection conn = manager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, tipo);
+
+            ResultSet rs = stmt.executeQuery();
+
+            List<Monstruo> lista = new ArrayList<>();
+
+            while (rs.next()) {
+                lista.add(MonstruoFactory.crear(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("tipo"),
+                        rs.getString("elemento"),
+                        rs.getInt("vida"),
+                        rs.getString("primera_aparicion")));
+            }
+
+            return lista;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 }

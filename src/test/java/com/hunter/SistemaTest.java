@@ -1,36 +1,31 @@
 package com.hunter;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import com.hunter.models.Monstruo;
 import com.hunter.models.Objeto;
 
-import com.hunter.repositories.ConnectionManager;
-import com.hunter.repositories.interfaces.IMonstruoRepository;
-import com.hunter.repositories.interfaces.IObjetoRepository;
+import com.hunter.repositories.SqliteConnectionManager;
+import com.hunter.repositories.IMonstruoRepository;
+import com.hunter.repositories.IObjetoRepository;
 
 import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
 import com.hunter.repositories.sqlite.ObjetoSqliteRepository;
 
-import com.hunter.services.MonstruoService;
-import com.hunter.services.ObjetoService;
+import com.hunter.services.impl.MonstruoService;
+import com.hunter.services.impl.ObjetoService;
 
 import java.util.List;
 
-/**
- * Unit test for Monster Hunter system
- */
 public class SistemaTest {
 
-    // 🧠 Helper para crear servicios (simula setup)
     private void inicializarDatos(MonstruoService monstruoService, ObjetoService objetoService) {
 
-        // 🐲 Monstruos de prueba
+        // 🐲 Monstruos (id = 0 porque la BD lo autogenera)
         monstruoService.crear(new Monstruo(
+                0,
                 "Rathalos",
                 "Wyvern Volador",
                 "Fuego",
@@ -39,6 +34,7 @@ public class SistemaTest {
         ));
 
         monstruoService.crear(new Monstruo(
+                0,
                 "Lagiacrus",
                 "Leviatan",
                 "Rayo",
@@ -47,6 +43,7 @@ public class SistemaTest {
         ));
 
         monstruoService.crear(new Monstruo(
+                0,
                 "Nergigante",
                 "Dragon Anciano",
                 "Oscuro",
@@ -54,20 +51,23 @@ public class SistemaTest {
                 "MHWorld"
         ));
 
-        // 💎 Objetos de prueba
+        // 💎 Objetos
         objetoService.crearObjeto(new Objeto(
+                null,
                 "Escama Wyvern",
                 2,
                 "Material básico"
         ));
 
         objetoService.crearObjeto(new Objeto(
+                null,
                 "Colmillo Ancestral",
                 4,
                 "Raro"
         ));
 
         objetoService.crearObjeto(new Objeto(
+                null,
                 "Corona Negra",
                 5,
                 "Legendario"
@@ -77,8 +77,7 @@ public class SistemaTest {
     @Test
     public void testSistemaCompleto() {
 
-        // 🔌 Conexión y servicios
-        ConnectionManager manager = new ConnectionManager();
+        SqliteConnectionManager manager = new SqliteConnectionManager();
 
         IMonstruoRepository monstruoRepo = new MonstruoSqliteRepository(manager);
         IObjetoRepository objetoRepo = new ObjetoSqliteRepository(manager);
@@ -86,10 +85,8 @@ public class SistemaTest {
         MonstruoService monstruoService = new MonstruoService(monstruoRepo);
         ObjetoService objetoService = new ObjetoService(objetoRepo);
 
-        // 🧪 INSERTAR DATOS (setup manual)
         inicializarDatos(monstruoService, objetoService);
 
-        // 🐲 TEST MONSTRUOS
         List<Monstruo> monstruos = monstruoService.obtenerTodos();
 
         assertNotNull(monstruos);
@@ -100,7 +97,6 @@ public class SistemaTest {
             System.out.println("- " + m.getNombre() + " | " + m.getTipo());
         }
 
-        // 💎 TEST OBJETOS
         List<Objeto> objetos = objetoService.obtenerTodosLosObjetos();
 
         assertNotNull(objetos);
@@ -111,7 +107,6 @@ public class SistemaTest {
             System.out.println("- " + o.getNombre() + " | Rareza " + o.getRareza());
         }
 
-        // 🎮 TEST FINAL
         assertFalse(monstruos.isEmpty());
         assertFalse(objetos.isEmpty());
 

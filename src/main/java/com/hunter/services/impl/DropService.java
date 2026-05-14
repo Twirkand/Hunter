@@ -3,7 +3,7 @@ package com.hunter.services.impl;
 import com.hunter.models.Drop;
 import com.hunter.models.Monstruo;
 import com.hunter.models.Objeto;
-import com.hunter.repositories.interfaces.IDropRepository;
+import com.hunter.repositories.IDropRepository;
 import com.hunter.services.IDropService;
 
 import java.util.ArrayList;
@@ -20,29 +20,25 @@ public class DropService implements IDropService {
     }
 
     @Override
-    public List<Objeto> obtenerDropsDeMonstruo(int idMonstruo) {
-        return dropRepository.findDropsByMonstruo(idMonstruo);
+    public List<Drop> obtenerDropsPorMonstruo(int id) {
+        return dropRepository.findDropsByMonstruoId(id);
+    }
+
+    @Override
+    public List<Drop> obtenerDropsPorMonstruo(String nombre) {
+        return dropRepository.findDropsByMonstruoNombre(nombre);
     }
 
     @Override
     public List<Objeto> generarDropsAleatorios(Monstruo monstruo) {
 
-        List<Objeto> posiblesDrops = dropRepository.findDropsByMonstruo(monstruo.getId());
+        List<Drop> posiblesDrops = dropRepository.findDropsByMonstruoId(monstruo.getId());
         List<Objeto> obtenidos = new ArrayList<>();
 
-        for (Objeto obj : posiblesDrops) {
+        for (Drop drop : posiblesDrops) {
 
-            double probabilidad = switch (obj.getRareza()) {
-                case 1 -> 0.80;
-                case 2 -> 0.50;
-                case 3 -> 0.30;
-                case 4 -> 0.10;
-                case 5 -> 0.03;
-                default -> 0.00;
-            };
-
-            if (random.nextDouble() <= probabilidad) {
-                obtenidos.add(obj);
+            if (random.nextDouble() <= drop.getProbabilidad()) {
+                obtenidos.add(drop.getObjeto());
             }
         }
 

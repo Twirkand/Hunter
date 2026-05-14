@@ -1,7 +1,8 @@
 package com.hunter.services.impl;
 
 import com.hunter.models.Monstruo;
-import com.hunter.repositories.interfaces.IMonstruoRepository;
+import com.hunter.repositories.IMonstruoRepository;
+import com.hunter.services.IMonstruoService;
 
 import java.util.List;
 
@@ -46,5 +47,20 @@ public class MonstruoService implements IMonstruoService {
     @Override
     public boolean eliminar(int id) {
         return repository.delete(id);
+    }
+
+    @Override
+    public Monstruo obtenerPorNombre(String nombre) {
+        return repository.findByNombre(nombre);
+    }
+
+    @Override
+    public List<Monstruo> obtenerPorTipo(String tipo) {
+
+        if (tipo == null || tipo.isBlank()) {
+            return List.of();
+        }
+
+        return repository.findByTipo(tipo.trim());
     }
 }

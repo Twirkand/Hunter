@@ -1,7 +1,8 @@
 package com.hunter.services.impl;
 
 import com.hunter.models.Objeto;
-import com.hunter.repositories.interfaces.IObjetoRepository;
+import com.hunter.repositories.IObjetoRepository;
+import com.hunter.services.IObjetoService;
 
 import java.util.List;
 
