@@ -248,6 +248,7 @@ public class Main {
                 // ===============
                 case 0 -> {
                     System.out.println(PURPLE + "Hasta la siguiente caza..." + RESET);
+                    scanner.close();
                     return;
                 }
 

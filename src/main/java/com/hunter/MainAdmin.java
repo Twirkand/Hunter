@@ -165,6 +165,7 @@ public class MainAdmin {
                 // =====================================================
                 case 0 -> {
                     System.out.println(PURPLE + "Saliendo..." + RESET);
+                    scanner.close();
                     return;
                 }
 
