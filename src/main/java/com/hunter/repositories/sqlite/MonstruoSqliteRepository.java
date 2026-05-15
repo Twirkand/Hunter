@@ -35,7 +35,6 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
                         rs.getString("nombre"),
                         rs.getString("tipo"),
                         rs.getString("elemento"),
-                        rs.getInt("vida"),
                         rs.getString("primera_aparicion")));
             }
 
@@ -67,7 +66,6 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
                     rs.getString("nombre"),
                     rs.getString("tipo"),
                     rs.getString("elemento"),
-                    rs.getInt("vida"),
                     rs.getString("primera_aparicion")
 
             );
@@ -80,7 +78,7 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
     @Override
     public boolean save(Monstruo m) {
 
-        String sql = "INSERT INTO monstruo(nombre, tipo, elemento, vida, primera_aparicion) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO monstruo(nombre, tipo, elemento, primera_aparicion) VALUES (?,?,?,?)";
 
         try (Connection conn = manager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -88,7 +86,6 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
             stmt.setString(1, m.getNombre());
             stmt.setString(2, m.getTipo());
             stmt.setString(3, m.getElemento());
-            stmt.setInt(4, m.getVida());
             stmt.setString(5, m.getPrimeraAparicion());
 
             stmt.executeUpdate();
@@ -110,7 +107,7 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
     @Override
     public boolean update(Monstruo m) {
 
-        String sql = "UPDATE monstruo SET nombre=?, tipo=?, elemento=?, vida=?, primera_aparicion=? WHERE id=?";
+        String sql = "UPDATE monstruo SET nombre=?, tipo=?, elemento=?, primera_aparicion=? WHERE id=?";
 
         try (Connection conn = manager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -118,7 +115,6 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
             stmt.setString(1, m.getNombre());
             stmt.setString(2, m.getTipo());
             stmt.setString(3, m.getElemento());
-            stmt.setInt(4, m.getVida());
             stmt.setString(5, m.getPrimeraAparicion());
             stmt.setInt(6, m.getId());
 
@@ -166,7 +162,6 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
                     rs.getString("nombre"),
                     rs.getString("tipo"),
                     rs.getString("elemento"),
-                    rs.getInt("vida"),
                     rs.getString("primera_aparicion"));
 
         } catch (Exception e) {
@@ -225,7 +220,6 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
                         rs.getString("nombre"),
                         rs.getString("tipo"),
                         rs.getString("elemento"),
-                        rs.getInt("vida"),
                         rs.getString("primera_aparicion")));
             }
 

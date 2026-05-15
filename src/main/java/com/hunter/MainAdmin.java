@@ -68,14 +68,11 @@ public class MainAdmin {
                     System.out.print("Elemento: ");
                     String elemento = scanner.nextLine();
 
-                    System.out.print("Vida: ");
-                    int vida = scanner.nextInt();
-                    scanner.nextLine();
 
                     System.out.print("Primera aparición: ");
                     String primeraAparicion = scanner.nextLine();
 
-                    Monstruo m = new Monstruo(0,nombre, tipo, elemento, vida, primeraAparicion);
+                    Monstruo m = new Monstruo(0,nombre, tipo, elemento, primeraAparicion);
 
                     boolean ok = monstruoService.crear(m);
 

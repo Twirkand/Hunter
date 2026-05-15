@@ -4,8 +4,8 @@ public class WyvernVolador extends Monstruo {
 
 
 
-    public WyvernVolador(int id, String nombre, String elemento, int vida, String primeraAparicion) {
-        super(id, nombre, "Wyvern Volador", elemento, vida, primeraAparicion);
+    public WyvernVolador(int id, String nombre, String elemento, String primeraAparicion) {
+        super(id, nombre, "Wyvern Volador", elemento, primeraAparicion);
 
     }
 

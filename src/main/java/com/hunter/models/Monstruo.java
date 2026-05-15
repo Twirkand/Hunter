@@ -9,16 +9,14 @@ public class Monstruo {
     private String nombre;
     private String tipo;
     private String elemento;
-    private int vida;
     private String primeraAparicion;
     private List<Drop> drops = new ArrayList<>();
 
-    public Monstruo(int id, String nombre, String tipo, String elemento, int vida, String primeraAparicion) {
+    public Monstruo(int id, String nombre, String tipo, String elemento, String primeraAparicion) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
         this.elemento = elemento;
-        this.vida = vida;
         this.primeraAparicion = primeraAparicion;
     }
 
@@ -38,9 +36,6 @@ public class Monstruo {
         return elemento;
     }
 
-    public int getVida() {
-        return vida;
-    }
 
     public String getPrimeraAparicion() {
         return primeraAparicion;

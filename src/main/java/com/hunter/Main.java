@@ -169,9 +169,6 @@ public class Main {
                                         CYAN + "Elemento: " + RESET +
                                                 YELLOW + monstruo.getElemento() + RESET);
 
-                                System.out.println(
-                                        CYAN + "Vida Base: " + RESET +
-                                                GREEN + monstruo.getVida() + RESET);
 
                                 System.out.println(
                                         CYAN + "Primera aparición: " + RESET +
@@ -236,9 +233,6 @@ public class Main {
                                     CYAN + "Elemento: " + RESET +
                                             YELLOW + monstruo.getElemento() + RESET);
 
-                            System.out.println(
-                                    CYAN + "Vida Base: " + RESET +
-                                            GREEN + monstruo.getVida() + RESET);
 
                             System.out.println(
                                     CYAN + "Primera aparición: " + RESET +
