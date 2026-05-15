@@ -4,8 +4,8 @@ public class DragonAnciano extends Monstruo {
 
 
 
-    public DragonAnciano(int id, String nombre, String elemento, int vida, String primeraAparicion) {
-        super(id, nombre, "Dragon Anciano", elemento, vida, primeraAparicion);
+    public DragonAnciano(int id, String nombre, String elemento, String primeraAparicion) {
+        super(id, nombre, "Dragon Anciano", elemento, primeraAparicion);
     }
 
 }
