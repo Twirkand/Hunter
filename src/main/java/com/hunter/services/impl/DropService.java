@@ -44,4 +44,10 @@ public class DropService implements IDropService {
 
         return obtenidos;
     }
+
+    @Override
+    public boolean crearDrop(int idMonstruo,int idObjeto,double probabilidad) {
+
+        return dropRepository.crearDrop(idMonstruo, idObjeto,probabilidad);
+    }
 }

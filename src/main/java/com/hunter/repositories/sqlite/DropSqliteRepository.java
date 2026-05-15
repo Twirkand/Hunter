@@ -103,4 +103,30 @@ public class DropSqliteRepository implements IDropRepository {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public boolean crearDrop(int idMonstruo, int idObjeto, double probabilidad) {
+
+        String sql = """
+                INSERT INTO drop_monstruo
+                (id_monstruo, id_objeto, probabilidad)
+                VALUES (?, ?, ?)
+                """;
+
+        try (
+                Connection conn = manager.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idMonstruo);
+            ps.setInt(2, idObjeto);
+            ps.setDouble(3, probabilidad);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
