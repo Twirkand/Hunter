@@ -1,5 +1,7 @@
 package com.hunter.controllers;
 
+import java.awt.Desktop;
+import java.net.URI;
 import com.hunter.models.Monstruo;
 import com.hunter.repositories.SqliteConnectionManager;
 import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
@@ -12,18 +14,26 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.net.URI;
 import java.util.List;
 
 public class BuscarPorTipoFX {
 
-    @FXML private ComboBox<String> comboTipos;
-    @FXML private TableView<Monstruo> tableMonstruos;
+    @FXML
+    private ComboBox<String> comboTipos;
+    @FXML
+    private TableView<Monstruo> tableMonstruos;
 
-    @FXML private TableColumn<Monstruo, Integer> id;
-    @FXML private TableColumn<Monstruo, String> nombre;
-    @FXML private TableColumn<Monstruo, String> tipo;
-    @FXML private TableColumn<Monstruo, String> elemento;
-    @FXML private TableColumn<Monstruo, String> primeraAparicion;
+    @FXML
+    private TableColumn<Monstruo, Integer> id;
+    @FXML
+    private TableColumn<Monstruo, String> nombre;
+    @FXML
+    private TableColumn<Monstruo, String> tipo;
+    @FXML
+    private TableColumn<Monstruo, String> elemento;
+    @FXML
+    private TableColumn<Monstruo, String> primeraAparicion;
 
     private MonstruoService service;
 
@@ -31,8 +41,7 @@ public class BuscarPorTipoFX {
     public void initialize() {
 
         service = new MonstruoService(
-                new MonstruoSqliteRepository(new SqliteConnectionManager())
-        );
+                new MonstruoSqliteRepository(new SqliteConnectionManager()));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -55,13 +64,12 @@ public class BuscarPorTipoFX {
 
         String tipo = comboTipos.getValue();
 
-        if (tipo == null || tipo.isBlank()) return;
+        if (tipo == null || tipo.isBlank())
+            return;
 
         tableMonstruos.setItems(
                 FXCollections.observableArrayList(
-                        service.obtenerPorTipo(tipo)
-                )
-        );
+                        service.obtenerPorTipo(tipo)));
     }
 
     @FXML
@@ -73,12 +81,14 @@ public class BuscarPorTipoFX {
 
         stage.setScene(scene);
     }
+
     @FXML
     private void abrirWeb() {
         try {
-            java.awt.Desktop.getDesktop().browse(
-                    new java.net.URI("https://github.com/Twirkand")
-            );
+            Desktop desktop = Desktop.getDesktop();
+            if (Desktop.isDesktopSupported()) {
+                desktop.browse(new URI("https://github.com/Twirkand"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

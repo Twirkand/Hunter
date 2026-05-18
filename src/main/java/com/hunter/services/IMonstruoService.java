@@ -39,7 +39,7 @@ public interface IMonstruoService {
      * @param nombre el nombre del monstruo
      * @return el monstruo
      */
-    Monstruo obtenerPorNombre(String nombre);
+    List<Monstruo> obtenerPorNombre(String nombre);
     /**
      * Obtiene los monstruos por su tipo
      * @param tipo el tipo del monstruo

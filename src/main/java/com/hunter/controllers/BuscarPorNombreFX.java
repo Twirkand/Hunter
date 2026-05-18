@@ -1,5 +1,7 @@
 package com.hunter.controllers;
 
+import java.awt.Desktop;
+import java.net.URI;
 import com.hunter.models.Monstruo;
 import com.hunter.repositories.SqliteConnectionManager;
 import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
@@ -14,15 +16,22 @@ import javafx.stage.Stage;
 
 public class BuscarPorNombreFX {
 
-    @FXML private TextField nombreOId;
+    @FXML
+    private TextField nombreOId;
 
-    @FXML private TableView<Monstruo> tableMonstruos;
+    @FXML
+    private TableView<Monstruo> tableMonstruos;
 
-    @FXML private TableColumn<Monstruo, Integer> id;
-    @FXML private TableColumn<Monstruo, String> nombre;
-    @FXML private TableColumn<Monstruo, String> tipo;
-    @FXML private TableColumn<Monstruo, String> elemento;
-    @FXML private TableColumn<Monstruo, String> primeraAparicion;
+    @FXML
+    private TableColumn<Monstruo, Integer> id;
+    @FXML
+    private TableColumn<Monstruo, String> nombre;
+    @FXML
+    private TableColumn<Monstruo, String> tipo;
+    @FXML
+    private TableColumn<Monstruo, String> elemento;
+    @FXML
+    private TableColumn<Monstruo, String> primeraAparicion;
 
     private MonstruoService service;
 
@@ -30,8 +39,7 @@ public class BuscarPorNombreFX {
     public void initialize() {
 
         service = new MonstruoService(
-                new MonstruoSqliteRepository(new SqliteConnectionManager())
-        );
+                new MonstruoSqliteRepository(new SqliteConnectionManager()));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -43,29 +51,36 @@ public class BuscarPorNombreFX {
     }
 
     @FXML
-    private void buscar() {
+private void buscar() {
 
-        String input = nombreOId.getText().trim();
+    String input = nombreOId.getText().trim();
 
-        if (input.isEmpty()) {
-            tableMonstruos.setItems(FXCollections.observableArrayList());
-            return;
-        }
+    if (input.isEmpty()) {
+        tableMonstruos.setItems(FXCollections.observableArrayList());
+        return;
+    }
 
-        Monstruo m;
+    if (input.matches("\\d+")) {
 
-        if (input.matches("\\d+")) {
-            m = service.obtenerPorId(Integer.parseInt(input));
-        } else {
-            m = service.obtenerPorNombre(input);
-        }
+        Monstruo m = service.obtenerPorId(Integer.parseInt(input));
 
         if (m != null) {
-            tableMonstruos.setItems(FXCollections.observableArrayList(m));
+            tableMonstruos.setItems(
+                    FXCollections.observableArrayList(m)
+            );
         } else {
             tableMonstruos.setItems(FXCollections.observableArrayList());
         }
+
+    } else {
+
+        var lista = service.obtenerPorNombre(input);
+
+        tableMonstruos.setItems(
+                FXCollections.observableArrayList(lista)
+        );
     }
+}
 
     @FXML
     private void volver() throws Exception {
@@ -76,12 +91,14 @@ public class BuscarPorNombreFX {
 
         stage.setScene(scene);
     }
+
     @FXML
     private void abrirWeb() {
         try {
-            java.awt.Desktop.getDesktop().browse(
-                    new java.net.URI("https://github.com/Twirkand")
-            );
+            Desktop desktop = Desktop.getDesktop();
+            if (Desktop.isDesktopSupported()) {
+                desktop.browse(new URI("https://github.com/Twirkand"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

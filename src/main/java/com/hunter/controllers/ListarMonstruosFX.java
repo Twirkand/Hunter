@@ -1,5 +1,7 @@
 package com.hunter.controllers;
 
+import java.awt.Desktop;
+import java.net.URI;
 import com.hunter.models.Monstruo;
 import com.hunter.repositories.SqliteConnectionManager;
 import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
@@ -17,13 +19,19 @@ import java.util.List;
 
 public class ListarMonstruosFX {
 
-    @FXML private TableView<Monstruo> tableMonstruos;
+    @FXML
+    private TableView<Monstruo> tableMonstruos;
 
-    @FXML private TableColumn<Monstruo, Integer> id;
-    @FXML private TableColumn<Monstruo, String> nombre;
-    @FXML private TableColumn<Monstruo, String> tipo;
-    @FXML private TableColumn<Monstruo, String> elemento;
-    @FXML private TableColumn<Monstruo, String> primeraAparicion;
+    @FXML
+    private TableColumn<Monstruo, Integer> id;
+    @FXML
+    private TableColumn<Monstruo, String> nombre;
+    @FXML
+    private TableColumn<Monstruo, String> tipo;
+    @FXML
+    private TableColumn<Monstruo, String> elemento;
+    @FXML
+    private TableColumn<Monstruo, String> primeraAparicion;
 
     private MonstruoService service;
 
@@ -52,8 +60,7 @@ public class ListarMonstruosFX {
     @FXML
     private void volver() throws Exception {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/main.fxml")
-        );
+                getClass().getResource("/main.fxml"));
 
         Stage stage = (Stage) tableMonstruos.getScene().getWindow();
         stage.setScene(new Scene(loader.load()));
@@ -62,9 +69,10 @@ public class ListarMonstruosFX {
     @FXML
     private void abrirWeb() {
         try {
-            java.awt.Desktop.getDesktop().browse(
-                    new java.net.URI("https://github.com/Twirkand")
-            );
+            Desktop desktop = Desktop.getDesktop();
+            if (Desktop.isDesktopSupported()) {
+                desktop.browse(new URI("https://github.com/Twirkand"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

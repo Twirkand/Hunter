@@ -1,24 +1,10 @@
 package com.hunter;
 
 import com.hunter.models.Monstruo;
-import com.hunter.models.Objeto;
-
-import com.hunter.repositories.SqliteConnectionManager;
-import com.hunter.repositories.IMonstruoRepository;
-import com.hunter.repositories.IObjetoRepository;
-import com.hunter.repositories.IDropRepository;
-
-import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
-import com.hunter.repositories.sqlite.ObjetoSqliteRepository;
-import com.hunter.repositories.sqlite.DropSqliteRepository;
-
-import com.hunter.services.IMonstruoService;
-import com.hunter.services.IObjetoService;
-import com.hunter.services.IDropService;
-
-import com.hunter.services.impl.MonstruoService;
-import com.hunter.services.impl.ObjetoService;
-import com.hunter.services.impl.DropService;
+import com.hunter.repositories.*;
+import com.hunter.repositories.sqlite.*;
+import com.hunter.services.*;
+import com.hunter.services.impl.*;
 
 import java.text.Normalizer;
 import java.util.List;
@@ -27,6 +13,7 @@ import java.util.Scanner;
 
 public class Main {
 
+    // ===== COLORES =====
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
@@ -35,230 +22,173 @@ public class Main {
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\u001B[37m";
+    public static final String GRAY = "\u001B[90m";
 
     public static void main(String[] args) {
 
         SqliteConnectionManager manager = new SqliteConnectionManager();
 
-        IMonstruoRepository monstruoRepo = new MonstruoSqliteRepository(manager);
-        IObjetoRepository objetoRepo = new ObjetoSqliteRepository(manager);
-        IDropRepository dropRepo = new DropSqliteRepository(manager);
-
-        IMonstruoService monstruoService = new MonstruoService(monstruoRepo);
-        IObjetoService objetoService = new ObjetoService(objetoRepo);
-        IDropService dropService = new DropService(dropRepo);
+        IMonstruoService monstruoService =
+                new MonstruoService(new MonstruoSqliteRepository(manager));
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(PURPLE + "🐲 SISTEMA HUNTER INICIADO" + RESET);
+        System.out.println(PURPLE + "\n🐲 SISTEMA HUNTER INICIADO\n" + RESET);
 
         while (true) {
 
-            System.out.println(BLUE + "\n==============================" + RESET);
-            System.out.println(YELLOW + "1. Ver monstruos" + RESET);
-            System.out.println(YELLOW + "2. Buscar monstruos" + RESET);
-            System.out.println(RED + "0. Salir" + RESET);
-            System.out.print(CYAN + "> " + RESET);
+            System.out.println(BLUE + "══════════════════════════════" + RESET);
+            System.out.println(YELLOW + " 1. Ver monstruos" + RESET);
+            System.out.println(CYAN + " 2. Buscar monstruos" + RESET);
+            System.out.println(RED + " 0. Salir" + RESET);
+            System.out.println(BLUE + "══════════════════════════════" + RESET);
 
-            int opciones = scanner.nextInt();
+            System.out.print(GRAY + "> " + RESET);
+
+            int opcion = scanner.nextInt();
             scanner.nextLine();
 
-            switch (opciones) {
+            switch (opcion) {
 
-                // =====================
-                // LISTAR TODOS
-                // =====================
                 case 1 -> {
-                    List<Monstruo> lista = monstruoService.obtenerTodos();
 
-                    System.out.println(GREEN + "\n MONSTRUOS:" + RESET);
+                    System.out.println(GREEN + "\n══════ LISTA DE MONSTRUOS ══════\n" + RESET);
 
-                    for (Monstruo m : lista) {
-                        System.out.println(
-                                CYAN + m.getId() + RESET + " - " +
-                                        WHITE + m.getNombre() + RESET + " (" +
-                                        PURPLE + m.getTipo() + RESET + ")");
-                    }
+                    monstruoService.obtenerTodos()
+                            .forEach(Main::mostrarMonstruo);
                 }
 
                 case 2 -> {
 
-                    System.out.println(PURPLE + "\n EXPLORACIÓN DE MONSTRUOS" + RESET);
-                    System.out.println(YELLOW + "1. Buscar por tipo" + RESET);
-                    System.out.println(YELLOW + "2. Buscar monstruo" + RESET);
-                    System.out.print(CYAN + "> " + RESET);
+                    System.out.println(PURPLE + "\n══════ BUSCAR MONSTRUOS ══════" + RESET);
+                    System.out.println(YELLOW + "1) Por tipo" + RESET);
+                    System.out.println(CYAN + "2) Por nombre o ID" + RESET);
 
-                    int submenu = scanner.nextInt();
+                    System.out.print(GRAY + "> " + RESET);
+
+                    int sub = scanner.nextInt();
                     scanner.nextLine();
 
-                    switch (submenu) {
+                    switch (sub) {
 
-                        // =====================
-                        // SELECTOR DE TIPOS
-                        // =====================
                         case 1 -> {
 
-                            List<Monstruo> todos = monstruoService.obtenerTodos();
-
-                            List<String> tipos = todos.stream()
+                            List<String> tipos = monstruoService.obtenerTodos()
+                                    .stream()
                                     .map(Monstruo::getTipo)
                                     .distinct()
                                     .sorted()
                                     .toList();
 
-                            System.out.println(PURPLE + "\n TIPOS DISPONIBLES:" + RESET);
+                            System.out.println(BLUE + "\n── TIPOS DISPONIBLES ──" + RESET);
 
                             for (int i = 0; i < tipos.size(); i++) {
-                                System.out.println(CYAN + "[" + (i + 1) + "] " + RESET + tipos.get(i));
+                                System.out.println(YELLOW + (i + 1) + ". " + RESET + tipos.get(i));
                             }
 
-                            System.out.print(YELLOW + "\nElige tipo: " + RESET);
+                            System.out.print(GRAY + "\nTipo: " + RESET);
+                            String entrada = scanner.nextLine();
 
-                            String entrada = scanner.nextLine().trim();
-
-                            String tipoElegido = null;
-
-                            if (entrada.matches("\\d+")) {
-
-                                int opcion = Integer.parseInt(entrada);
-
-                                if (opcion >= 1 && opcion <= tipos.size()) {
-                                    tipoElegido = tipos.get(opcion - 1);
-                                }
-
-                            } else {
-
-                                String entradaNormalizada = normalizar(entrada);
-
-                                for (String tipo : tipos) {
-
-                                    if (normalizar(tipo).equals(entradaNormalizada)) {
-                                        tipoElegido = tipo;
-                                        break;
-                                    }
-                                }
-                            }
+                            String tipoElegido = resolverTipo(entrada, tipos);
 
                             if (tipoElegido == null) {
-                                System.out.println(RED + "Tipo inválido" + RESET);
+                                System.out.println(RED + "\nTipo inválido\n" + RESET);
                                 break;
                             }
 
-                            List<Monstruo> lista = monstruoService.obtenerPorTipo(tipoElegido);
+                            System.out.println(GREEN + "\n══ RESULTADOS ══\n" + RESET);
 
-                            System.out.println(PURPLE + "\n MONSTRUOS DEL TIPO: " + RESET + tipoElegido);
-
-                            for (Monstruo monstruo : lista) {
-
-                                System.out.println(
-                                        PURPLE + "\n==============================" + RESET);
-
-                                System.out.println(
-                                        CYAN + "ID: " + RESET +
-                                                WHITE + monstruo.getId() + RESET);
-
-                                System.out.println(
-                                        CYAN + "Nombre: " + RESET +
-                                                WHITE + monstruo.getNombre() + RESET);
-
-                                System.out.println(
-                                        CYAN + "Tipo: " + RESET +
-                                                PURPLE + monstruo.getTipo() + RESET);
-
-                                System.out.println(
-                                        CYAN + "Elemento: " + RESET +
-                                                YELLOW + monstruo.getElemento() + RESET);
-
-
-                                System.out.println(
-                                        CYAN + "Primera aparición: " + RESET +
-                                                WHITE + monstruo.getPrimeraAparicion() + RESET);
-
-                                System.out.println(
-                                        PURPLE + "==============================" + RESET);
-                            }
+                            monstruoService.obtenerPorTipo(tipoElegido)
+                                    .forEach(Main::mostrarMonstruo);
                         }
 
-                        // =====================
-                        // BUSCAR MONSTRUO
-                        // =====================
                         case 2 -> {
 
-                            System.out.print("Nombre o ID monstruo: ");
-
+                            System.out.print(GRAY + "\nBuscar: " + RESET);
                             String entrada = scanner.nextLine().trim();
 
-                            Monstruo monstruo;
+                            List<Monstruo> lista;
 
-                            // =================================================
-                            // SI ES ID
-                            // =================================================
                             if (entrada.matches("\\d+")) {
 
-                                int id = Integer.parseInt(entrada);
+                                Monstruo m = monstruoService.obtenerPorId(Integer.parseInt(entrada));
 
-                                monstruo = monstruoService.obtenerPorId(id);
+                                if (m == null) {
+                                    System.out.println(RED + "No encontrado\n" + RESET);
+                                    break;
+                                }
+
+                                lista = List.of(m);
 
                             } else {
 
-                                // =============================================
-                                // SI ES NOMBRE
-                                // =============================================
-                                monstruo = monstruoService.obtenerPorNombre(entrada);
+                                lista = monstruoService.obtenerPorNombre(entrada);
+
+                                if (lista.isEmpty()) {
+                                    System.out.println(RED + "No encontrado\n" + RESET);
+                                    break;
+                                }
                             }
 
-                            if (monstruo == null) {
+                            System.out.println(GREEN + "\n══ RESULTADOS ══\n" + RESET);
 
-                                System.out.println(
-                                        RED + "No existe ese monstruo" + RESET);
-
-                                break;
-                            }
-
-                            System.out.println(GREEN + "\n RESULTADO:" + RESET);
-
-                            System.out.println(
-                                    CYAN + "ID: " + RESET +
-                                            WHITE + monstruo.getId() + RESET);
-
-                            System.out.println(
-                                    CYAN + "Nombre: " + RESET +
-                                            WHITE + monstruo.getNombre() + RESET);
-
-                            System.out.println(
-                                    CYAN + "Tipo: " + RESET +
-                                            PURPLE + monstruo.getTipo() + RESET);
-
-                            System.out.println(
-                                    CYAN + "Elemento: " + RESET +
-                                            YELLOW + monstruo.getElemento() + RESET);
-
-
-                            System.out.println(
-                                    CYAN + "Primera aparición: " + RESET +
-                                            WHITE + monstruo.getPrimeraAparicion() + RESET);
+                            lista.forEach(Main::mostrarMonstruo);
                         }
-
-                        default -> System.out.println(RED + "Opción inválida" + RESET);
                     }
                 }
 
-                // ================
-                // SALIDA
-                // ===============
                 case 0 -> {
-                    System.out.println(PURPLE + "Hasta la siguiente caza..." + RESET);
-                    scanner.close();
+                    System.out.println(PURPLE + "\nHasta la próxima caza 🐲\n" + RESET);
                     return;
                 }
-
-                default -> System.out.println(RED + "Opción inválida" + RESET);
             }
         }
     }
 
-    private static String normalizar(String texto) {
+    // =========================
+    // MONSTRUO CON COLORES
+    // =========================
+    private static void mostrarMonstruo(Monstruo m) {
 
+        System.out.println(BLUE + "──────────────────────────────" + RESET);
+
+        System.out.println(WHITE + "ID: " + CYAN + m.getId() + RESET);
+
+        System.out.println(WHITE + "Nombre: " + YELLOW + m.getNombre() + RESET);
+
+        System.out.println(WHITE + "Tipo: " + PURPLE + m.getTipo() + RESET);
+
+        System.out.println(WHITE + "Elemento: " + RED + m.getElemento() + RESET);
+
+        System.out.println(WHITE + "Aparición: " + GREEN + m.getPrimeraAparicion() + RESET);
+    }
+
+    // =========================
+    // RESOLVER TIPO
+    // =========================
+    private static String resolverTipo(String entrada, List<String> tipos) {
+
+        if (entrada.matches("\\d+")) {
+
+            int i = Integer.parseInt(entrada);
+
+            if (i >= 1 && i <= tipos.size()) {
+                return tipos.get(i - 1);
+            }
+        }
+
+        String norm = normalizar(entrada);
+
+        for (String t : tipos) {
+            if (normalizar(t).equals(norm)) {
+                return t;
+            }
+        }
+
+        return null;
+    }
+
+    private static String normalizar(String texto) {
         return Normalizer.normalize(texto, Normalizer.Form.NFD)
                 .replaceAll("\\p{M}", "")
                 .toLowerCase(Locale.ROOT)

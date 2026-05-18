@@ -143,30 +143,33 @@ public class MonstruoSqliteRepository implements IMonstruoRepository {
     }
 
     @Override
-    public Monstruo findByNombre(String nombre) {
+    public List<Monstruo> findByNombre(String nombre) {
 
-        String sql = "SELECT * FROM monstruo WHERE LOWER(nombre) = LOWER(?)";
+        String sql = "SELECT * FROM monstruo WHERE LOWER(nombre) LIKE LOWER(?)";
 
         try (Connection conn = manager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, nombre);
+            stmt.setString(1, "%" + nombre + "%");
 
             ResultSet rs = stmt.executeQuery();
 
-            if (!rs.next())
-                return null;
+            List<Monstruo> lista = new ArrayList<>();
 
-            return MonstruoFactory.crear(
-                    rs.getInt("id"),
-                    rs.getString("nombre"),
-                    rs.getString("tipo"),
-                    rs.getString("elemento"),
-                    rs.getString("primera_aparicion"));
+            while (rs.next()) {
+                lista.add(MonstruoFactory.crear(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("tipo"),
+                        rs.getString("elemento"),
+                        rs.getString("primera_aparicion")));
+            }
+
+            return lista;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
     }
 
