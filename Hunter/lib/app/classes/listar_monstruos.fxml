@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane xmlns="http://javafx.com/javafx/26"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hunter.controllers.ListarMonstruosFX"
+      prefHeight="400.0" prefWidth="600.0">
+
+    <children>
+
+        <Hyperlink fx:id="twirkand"
+                    layoutX="20.0" layoutY="356.0"
+                    text="@Twirkand"
+                    onAction="#abrirWeb"/>
+
+        <Label layoutX="107.0" layoutY="56.0" text="PROJECT HUNTER">
+            <font>
+                <Font name="Papyrus" size="32.0"/>
+            </font>
+        </Label>
+
+        <Button fx:id="botonVolver"
+                layoutX="518.0" layoutY="344.0"
+                text="VOLVER"
+                onAction="#volver"/>
+
+        <TableView fx:id="tableMonstruos"
+                   layoutX="38.0" layoutY="131.0"
+                   prefHeight="200.0" prefWidth="525.0">
+
+            <columns>
+                <TableColumn fx:id="id" text="ID" prefWidth="37.0"/>
+                <TableColumn fx:id="nombre" text="Nombre" prefWidth="201.0"/>
+                <TableColumn fx:id="tipo" text="Tipo" prefWidth="81.0"/>
+                <TableColumn fx:id="elemento" text="Elemento" prefWidth="86.0"/>
+                <TableColumn fx:id="primeraAparicion" text="Primera Aparición" prefWidth="119.0"/>
+            </columns>
+
+        </TableView>
+
+    </children>
+</Pane>
