@@ -1,6 +1,0 @@
-<?xml version="1.0" ?>
-<jpackage-state version="27-ea" platform="linux">
-  <app-version>1.0</app-version>
-  <main-launcher name="Hunter">
-    <description>Hunter</description>
-  </main-launcher></jpackage-state>
