@@ -9,7 +9,7 @@
 
     <groupId>com.hunter</groupId>
     <artifactId>hunter</artifactId>
-    <version>0.2.11</version>
+    <version>0.3</version>
 
     <name>hunter</name>
     <url>http://www.example.com</url>
@@ -79,6 +79,18 @@
                     <mainClass>com.hunter.MainApp</mainClass>
                 </configuration>
             </plugin>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.3.0</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>com.hunter.MainApp</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin>
 
         </plugins>
     </build>
