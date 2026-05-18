@@ -1,5 +1,7 @@
 package com.hunter.controllers;
 
+import java.awt.Desktop;
+import java.net.URI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,9 +32,10 @@ public class MainFX {
     @FXML
     private void abrirWeb() {
         try {
-            java.awt.Desktop.getDesktop().browse(
-                    new java.net.URI("https://github.com/Twirkand")
-            );
+            Desktop desktop = Desktop.getDesktop();
+            if (Desktop.isDesktopSupported()) {
+                desktop.browse(new URI("https://github.com/Twirkand"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

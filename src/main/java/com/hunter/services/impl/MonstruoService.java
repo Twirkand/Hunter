@@ -50,7 +50,7 @@ public class MonstruoService implements IMonstruoService {
     }
 
     @Override
-    public Monstruo obtenerPorNombre(String nombre) {
+    public List<Monstruo> obtenerPorNombre(String nombre) {
         return repository.findByNombre(nombre);
     }
 
