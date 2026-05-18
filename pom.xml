@@ -9,19 +9,20 @@
 
     <groupId>com.hunter</groupId>
     <artifactId>hunter</artifactId>
-    <version>0.3</version>
+    <version>0.3.1</version>
 
     <name>hunter</name>
-    <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Java 21 -->
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <!-- Java -->
+        <maven.compiler.release>21</maven.compiler.release>
 
+        <!-- JavaFX -->
         <javafx.version>21.0.7</javafx.version>
+
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencies>
@@ -47,6 +48,7 @@
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
@@ -58,39 +60,57 @@
     <build>
         <plugins>
 
-            <!-- Compilador Java -->
+            <!-- COMPILADOR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
-
                 <configuration>
                     <release>21</release>
                 </configuration>
             </plugin>
 
-            <!-- Plugin JavaFX -->
+            <!-- JAVA FX RUN (DESARROLLO) -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
-
                 <configuration>
                     <mainClass>com.hunter.MainApp</mainClass>
                 </configuration>
             </plugin>
+
+            <!-- JAR EJECUTABLE -->
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.3.0</version>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <mainClass>com.hunter.MainApp</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.hunter.MainApp</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- DEPENDENCIAS EN TARGET/LIB -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
         </plugins>
     </build>
