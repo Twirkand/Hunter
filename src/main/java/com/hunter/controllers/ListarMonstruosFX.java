@@ -1,20 +1,18 @@
 package com.hunter.controllers;
 
-import java.awt.Desktop;
-import java.net.URI;
 import com.hunter.models.Monstruo;
+import com.hunter.navigation.Navigator;
 import com.hunter.repositories.SqliteConnectionManager;
 import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
 import com.hunter.services.impl.MonstruoService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
+import java.awt.Desktop;
+import java.net.URI;
 import java.util.List;
 
 public class ListarMonstruosFX {
@@ -48,8 +46,6 @@ public class ListarMonstruosFX {
         primeraAparicion.setCellValueFactory(new PropertyValueFactory<>("primeraAparicion"));
 
         cargarDatos();
-
-        System.out.println("DEBUG monstruos: " + service.obtenerTodos().size());
     }
 
     private void cargarDatos() {
@@ -58,20 +54,17 @@ public class ListarMonstruosFX {
     }
 
     @FXML
-    private void volver() throws Exception {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/main.fxml"));
-
-        Stage stage = (Stage) tableMonstruos.getScene().getWindow();
-        stage.setScene(new Scene(loader.load()));
+    private void volver() {
+        Navigator.goTo("main.fxml");
     }
 
     @FXML
     private void abrirWeb() {
         try {
-            Desktop desktop = Desktop.getDesktop();
             if (Desktop.isDesktopSupported()) {
-                desktop.browse(new URI("https://github.com/Twirkand"));
+                Desktop.getDesktop().browse(
+                        new URI("https://github.com/Twirkand")
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();

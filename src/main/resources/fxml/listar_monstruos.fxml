@@ -11,10 +11,7 @@
 
     <children>
 
-        <Hyperlink fx:id="twirkand"
-                    layoutX="20.0" layoutY="356.0"
-                    text="@Twirkand"
-                    onAction="#abrirWeb"/>
+        <Hyperlink id="twirkand" fx:id="twirkand" layoutX="20.0" layoutY="356.0" onAction="#abrirWeb" text="\@Twirkand" />
 
         <Label layoutX="107.0" layoutY="56.0" text="PROJECT HUNTER">
             <font>

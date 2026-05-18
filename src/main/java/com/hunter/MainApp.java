@@ -1,27 +1,26 @@
 package com.hunter;
 
+import com.hunter.navigation.Navigator;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
 
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/main.fxml")
-        );
+        // 🔥 Inicializa el Navigator con el Stage principal
+        Navigator.init(stage);
 
-        Scene scene = new Scene(loader.load());
+        // 🔥 Primera pantalla de la app
+        Navigator.goTo("main.fxml");
 
         stage.setTitle("Project Hunter");
-        stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }

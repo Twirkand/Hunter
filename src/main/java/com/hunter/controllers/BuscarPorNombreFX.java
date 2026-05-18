@@ -1,18 +1,17 @@
 package com.hunter.controllers;
 
-import java.awt.Desktop;
-import java.net.URI;
 import com.hunter.models.Monstruo;
+import com.hunter.navigation.Navigator;
 import com.hunter.repositories.SqliteConnectionManager;
 import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
 import com.hunter.services.impl.MonstruoService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
+
+import java.awt.Desktop;
+import java.net.URI;
 
 public class BuscarPorNombreFX {
 
@@ -33,13 +32,15 @@ public class BuscarPorNombreFX {
     @FXML
     private TableColumn<Monstruo, String> primeraAparicion;
 
-    private MonstruoService service;
+    private final MonstruoService service =
+            new MonstruoService(
+                    new MonstruoSqliteRepository(
+                            new SqliteConnectionManager()
+                    )
+            );
 
     @FXML
     public void initialize() {
-
-        service = new MonstruoService(
-                new MonstruoSqliteRepository(new SqliteConnectionManager()));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -51,53 +52,47 @@ public class BuscarPorNombreFX {
     }
 
     @FXML
-private void buscar() {
+    private void buscar() {
 
-    String input = nombreOId.getText().trim();
+        String input = nombreOId.getText().trim();
 
-    if (input.isEmpty()) {
-        tableMonstruos.setItems(FXCollections.observableArrayList());
-        return;
-    }
-
-    if (input.matches("\\d+")) {
-
-        Monstruo m = service.obtenerPorId(Integer.parseInt(input));
-
-        if (m != null) {
-            tableMonstruos.setItems(
-                    FXCollections.observableArrayList(m)
-            );
-        } else {
+        if (input.isEmpty()) {
             tableMonstruos.setItems(FXCollections.observableArrayList());
+            return;
         }
 
-    } else {
+        if (input.matches("\\d+")) {
 
-        var lista = service.obtenerPorNombre(input);
+            Monstruo m = service.obtenerPorId(Integer.parseInt(input));
 
-        tableMonstruos.setItems(
-                FXCollections.observableArrayList(lista)
-        );
+            if (m != null) {
+                tableMonstruos.setItems(FXCollections.observableArrayList(m));
+            } else {
+                tableMonstruos.setItems(FXCollections.observableArrayList());
+            }
+
+        } else {
+
+            tableMonstruos.setItems(
+                    FXCollections.observableArrayList(
+                            service.obtenerPorNombre(input)
+                    )
+            );
+        }
     }
-}
 
     @FXML
-    private void volver() throws Exception {
-        Stage stage = (Stage) tableMonstruos.getScene().getWindow();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/buscar_monstruos.fxml"));
-        Scene scene = new Scene(loader.load());
-
-        stage.setScene(scene);
+    private void volver() {
+        Navigator.goTo("buscar_monstruos.fxml");
     }
 
     @FXML
     private void abrirWeb() {
         try {
-            Desktop desktop = Desktop.getDesktop();
             if (Desktop.isDesktopSupported()) {
-                desktop.browse(new URI("https://github.com/Twirkand"));
+                Desktop.getDesktop().browse(
+                        new URI("https://github.com/Twirkand")
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();
