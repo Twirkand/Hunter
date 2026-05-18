@@ -6,8 +6,11 @@ import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
 import com.hunter.services.impl.MonstruoService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -41,6 +44,7 @@ public class BuscarPorTipoFX {
                 .stream()
                 .map(Monstruo::getTipo)
                 .distinct()
+                .sorted()
                 .toList();
 
         comboTipos.setItems(FXCollections.observableArrayList(tipos));
@@ -51,12 +55,32 @@ public class BuscarPorTipoFX {
 
         String tipo = comboTipos.getValue();
 
-        if (tipo == null) return;
+        if (tipo == null || tipo.isBlank()) return;
 
         tableMonstruos.setItems(
                 FXCollections.observableArrayList(
                         service.obtenerPorTipo(tipo)
                 )
         );
+    }
+
+    @FXML
+    private void volver() throws Exception {
+        Stage stage = (Stage) tableMonstruos.getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/buscar_monstruos.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        stage.setScene(scene);
+    }
+    @FXML
+    private void abrirWeb() {
+        try {
+            java.awt.Desktop.getDesktop().browse(
+                    new java.net.URI("https://github.com/Twirkand")
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
