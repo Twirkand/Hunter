@@ -7,23 +7,10 @@ import javafx.stage.Stage;
 
 public class MainFX {
 
-    private void cambiar(String fxml) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/" + fxml)
-            );
-
-            Scene scene = new Scene(loader.load());
-
-            Stage stage = (Stage) scene.getWindow();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private Stage getStage() {
-        return (Stage) javafx.stage.Stage.getWindows().filtered(w -> w.isShowing()).get(0);
+        return (Stage) javafx.stage.Stage.getWindows()
+                .filtered(w -> w.isShowing())
+                .get(0);
     }
 
     @FXML
@@ -38,5 +25,16 @@ public class MainFX {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/buscar_monstruos.fxml"));
         Scene scene = new Scene(loader.load());
         getStage().setScene(scene);
+    }
+
+    @FXML
+    private void abrirWeb() {
+        try {
+            java.awt.Desktop.getDesktop().browse(
+                    new java.net.URI("https://github.com/Twirkand")
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

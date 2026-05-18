@@ -6,10 +6,11 @@ import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
 import com.hunter.services.impl.MonstruoService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.util.List;
+import javafx.stage.Stage;
 
 public class BuscarPorNombreFX {
 
@@ -28,14 +29,17 @@ public class BuscarPorNombreFX {
     @FXML
     public void initialize() {
 
-        SqliteConnectionManager manager = new SqliteConnectionManager();
-        this.service = new MonstruoService(new MonstruoSqliteRepository(manager));
+        service = new MonstruoService(
+                new MonstruoSqliteRepository(new SqliteConnectionManager())
+        );
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         elemento.setCellValueFactory(new PropertyValueFactory<>("elemento"));
         primeraAparicion.setCellValueFactory(new PropertyValueFactory<>("primeraAparicion"));
+
+        tableMonstruos.setItems(FXCollections.observableArrayList());
     }
 
     @FXML
@@ -43,7 +47,10 @@ public class BuscarPorNombreFX {
 
         String input = nombreOId.getText().trim();
 
-        if (input.isEmpty()) return;
+        if (input.isEmpty()) {
+            tableMonstruos.setItems(FXCollections.observableArrayList());
+            return;
+        }
 
         Monstruo m;
 
@@ -57,6 +64,26 @@ public class BuscarPorNombreFX {
             tableMonstruos.setItems(FXCollections.observableArrayList(m));
         } else {
             tableMonstruos.setItems(FXCollections.observableArrayList());
+        }
+    }
+
+    @FXML
+    private void volver() throws Exception {
+        Stage stage = (Stage) tableMonstruos.getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/buscar_monstruos.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        stage.setScene(scene);
+    }
+    @FXML
+    private void abrirWeb() {
+        try {
+            java.awt.Desktop.getDesktop().browse(
+                    new java.net.URI("https://github.com/Twirkand")
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
