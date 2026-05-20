@@ -11,7 +11,7 @@ public class MonstruoFactory {
             String primeraAparicion) {
 
         if (tipo == null) {
-            return new Monstruo(id, nombre, "Desconocido", elemento, primeraAparicion);
+            return new Monstruo(id, nombre, "-", elemento, primeraAparicion);
         }
 
         /*

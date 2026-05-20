@@ -2,76 +2,61 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane xmlns="http://javafx.com/javafx/26"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.hunter.controllers.MonsterTableController"
-            stylesheets="@fxml/css/styles.css">
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hunter.controllers.MonsterTableController" stylesheets="@css/styles.css">
 
     <center>
 
         <HBox fillHeight="true">
 
-            <!-- ================= LISTA PRINCIPAL (OCUPA TODO) ================= -->
-            <TableView fx:id="tableMonstruos"
-                       HBox.hgrow="ALWAYS">
+            <TableView fx:id="tableMonstruos" HBox.hgrow="ALWAYS">
 
                 <columns>
-                    <TableColumn fx:id="id"
-             text="ID"
-             prefWidth="50"
-             maxWidth="70"
-             minWidth="40"/>
-
-<TableColumn fx:id="nombre"
-             text="NOMBRE"
-             prefWidth="250"/>
-
-<TableColumn fx:id="tipo"
-             text="TIPO"
-             prefWidth="200"/>
-
-<TableColumn fx:id="elemento"
-             text="ELEMENTO"
-             prefWidth="150"/>
-
-<TableColumn fx:id="primeraAparicion"
-             text="PRIMERA APARICION"
-             prefWidth="180"/>
+                    <TableColumn fx:id="id" text="ID" prefWidth="50" maxWidth="70" minWidth="40"/>
+                    <TableColumn fx:id="nombre" text="NOMBRE" prefWidth="250"/>
+                    <TableColumn fx:id="tipo" text="TIPO" prefWidth="200"/>
+                    <TableColumn fx:id="elemento" text="ELEMENTO" prefWidth="150"/>
+                    <TableColumn fx:id="primeraAparicion" text="PRIMERA APARICION" prefWidth="180"/>
                 </columns>
 
             </TableView>
 
-            <!-- ================= PANEL DERECHO ================= -->
-            <VBox spacing="12"
-                  HBox.hgrow="NEVER"
-                  alignment="CENTER"
-                  prefWidth="180"
-                  maxWidth="200"
-                  styleClass="sidebar">
+            <VBox spacing="12" HBox.hgrow="NEVER" alignment="CENTER" prefWidth="180" maxWidth="200" styleClass="sidebar">
 
                 <Label text="FILTROS"/>
 
-                <Button text="TODOS"
-                        onAction="#handleLoadAll"
-                        maxWidth="Infinity"/>
+                <Button text="TODOS" onAction="#handleLoadAll" maxWidth="Infinity"/>
 
-                <ComboBox fx:id="typeCombo"
-                          promptText="TIPO"
-                          maxWidth="Infinity"/>
+                <ComboBox fx:id="typeCombo" promptText="TIPO" maxWidth="Infinity"/>
 
-                <Button text="BUSCAR TIPO"
-                        onAction="#handleSearchByType"
-                        maxWidth="Infinity"/>
+                <Button text="BUSCAR TIPO" onAction="#handleSearchByType" maxWidth="Infinity"/>
 
-                <TextField fx:id="nameField"
-                           promptText="NOMBRE"
-                           maxWidth="Infinity"/>
+                <TextField fx:id="nameField" promptText="NOMBRE" maxWidth="Infinity"/>
 
-                <Button text="BUSCAR"
-                        onAction="#handleSearchByName"
-                        maxWidth="Infinity"/>
+                <Button text="BUSCAR" onAction="#handleSearchByName" maxWidth="Infinity"/>
 
+                <Region VBox.vgrow="ALWAYS"/>
+                <StackPane styleClass="image-frame">
+    <ImageView fx:id="monsterImage"
+               fitWidth="160"
+               fitHeight="160"
+               preserveRatio="true"/>
+</StackPane>
+
+                <Button fx:id="githubButton" styleClass="github-button">
+
+                    <graphic>
+                        <ImageView fitWidth="28" fitHeight="28" preserveRatio="true">
+                            <image>
+                                <Image url="@/img/Icon.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+
+                </Button>
             </VBox>
 
         </HBox>

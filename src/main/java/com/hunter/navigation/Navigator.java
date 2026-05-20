@@ -9,7 +9,6 @@ public class Navigator {
 
     private static Stage stage;
 
-    // 🔥 ruta del CSS global
     private static final String CSS =
             Navigator.class.getResource("/fxml/css/styles.css").toExternalForm();
 
@@ -28,7 +27,6 @@ public class Navigator {
 
             Scene scene = new Scene(root);
 
-            // 🔥 APLICAR CSS GLOBAL AQUÍ (CORRECTO)
             scene.getStylesheets().add(CSS);
 
             stage.setScene(scene);
