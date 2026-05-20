@@ -1,0 +1,124 @@
+.root {
+    -fx-font-family: "Segoe UI";
+
+    /* 🔵 fondo más azul */
+    -fx-background-color: linear-gradient(
+        to bottom right,
+        #d9ecff,
+        #ffffff,
+        #e6f3ff
+    );
+}
+
+/* ================= TABLE GLASS AZUL ================= */
+.table-view {
+    -fx-background-color: rgba(255, 255, 255, 0.22);
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: rgba(120, 170, 255, 0.35);
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 25, 0.25, 0, 6);
+}
+
+/* header azul cristal */
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(
+        to bottom,
+        rgba(160, 200, 255, 0.7),
+        rgba(110, 160, 255, 0.5)
+    );
+    -fx-background-radius: 18 18 0 0;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-cell-size: 40px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(255, 255, 255, 0.18);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(90, 150, 255, 0.65);
+    -fx-text-fill: white;
+}
+
+/* ================= SIDEBAR ULTRA GLASS ================= */
+.sidebar {
+    -fx-background-color: rgba(255, 255, 255, 0.18);
+    -fx-background-radius: 22;
+    -fx-border-radius: 22;
+    -fx-border-color: rgba(120, 170, 255, 0.3);
+
+    -fx-padding: 22;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.22), 30, 0.25, 0, 8);
+
+    -fx-alignment: center;
+}
+
+/* 🔥 MÁS ESPACIO ENTRE BLOQUES */
+.sidebar VBox {
+    -fx-spacing: 18;
+}
+
+/* ================= BOTONES AERO AZUL (MUY SEPARADOS) ================= */
+.button {
+    -fx-background-color: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.85),
+        rgba(170,210,255,0.45)
+    );
+
+    -fx-text-fill: #1b2a44;
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+
+    -fx-border-color: rgba(90,140,255,0.35);
+
+    -fx-padding: 12 16;
+
+    /* 🔥 MÁS “FLOTANTE” */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 14, 0.25, 0, 3);
+
+    -fx-cursor: hand;
+}
+
+/* hover azul más fuerte */
+.button:hover {
+    -fx-background-color: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.95),
+        rgba(150,200,255,0.65)
+    );
+}
+
+/* click */
+.button:pressed {
+    -fx-background-color: rgba(120, 170, 255, 0.55);
+}
+
+/* ================= INPUTS GLASS AZUL ================= */
+.text-field,
+.combo-box {
+    -fx-background-color: rgba(255,255,255,0.35);
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+
+    -fx-border-color: rgba(120,170,255,0.35);
+    -fx-padding: 9;
+}
+
+.text-field:focused,
+.combo-box:focused {
+    -fx-border-color: rgba(70,130,255,0.9);
+    -fx-effect: dropshadow(gaussian, rgba(70,130,255,0.45), 12, 0.3, 0, 0);
+}
+
+/* ================= SEPARADORES (MÁS AIRE) ================= */
+.separator {
+    -fx-opacity: 0.18;
+    -fx-padding: 12;
+}

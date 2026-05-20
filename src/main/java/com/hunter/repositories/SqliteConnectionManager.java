@@ -33,18 +33,17 @@ public class SqliteConnectionManager {
 
             Path dbPath = Paths.get(DB_PATH);
 
-            if (!Files.exists(dbPath)) {
+            Files.deleteIfExists(dbPath);
 
-                InputStream in = getClass()
-                        .getResourceAsStream("/database/monsters.db");
+            InputStream in = getClass()
+                    .getResourceAsStream("/database/monsters.db");
 
-                if (in == null) {
-                    throw new RuntimeException(
-                            "No se encontró /database/monsters.db en resources");
-                }
-
-                Files.copy(in, dbPath, StandardCopyOption.REPLACE_EXISTING);
+            if (in == null) {
+                throw new RuntimeException(
+                        "No se encontró /database/monsters.db en resources");
             }
+
+            Files.copy(in, dbPath, StandardCopyOption.REPLACE_EXISTING);
 
         } catch (Exception e) {
             throw new RuntimeException("Error inicializando base de datos", e);

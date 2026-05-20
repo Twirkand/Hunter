@@ -9,14 +9,21 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
 
-        // 🔥 Inicializa el Navigator con el Stage principal
+        // 🔥 Inicializa navegación
         Navigator.init(stage);
 
-        // 🔥 Primera pantalla de la app
+        // 🔥 Pantalla principal de tu nueva app (LISTADO MONSTRUOS)
         Navigator.goTo("main.fxml");
 
-        stage.setTitle("Project Hunter");
-        stage.setResizable(false);
+        // ================= CONFIG VENTANA =================
+        stage.setTitle("Hunter - Monstruos");
+        stage.setResizable(true); // 🔥 importante para tu CSS responsive
+
+        // opcional pero recomendable
+        stage.setMinWidth(800);
+        stage.setMinHeight(500);
+
+        stage.centerOnScreen();
         stage.show();
     }
 

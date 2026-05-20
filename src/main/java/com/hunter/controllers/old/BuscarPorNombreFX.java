@@ -1,4 +1,4 @@
-package com.hunter.controllers;
+package com.hunter.controllers.old;
 
 import com.hunter.models.Monstruo;
 import com.hunter.navigation.Navigator;

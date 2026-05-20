@@ -1,28 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hunter.controllers.MainFX">
-   <children>
-      <Button id="botonVerMonstruos" fx:id="botonVerMonstruos" layoutX="50.0" layoutY="220.0" mnemonicParsing="false" onAction="#irVerMonstruos" prefHeight="79.0" prefWidth="200.0" text="Ver Monstruos">
-         <font>
-            <Font name="Pristina" size="12.0" />
-         </font>
-      </Button>
-      <Button id="botonBuscarMonstruos" fx:id="botonBuscarMonstruos" layoutX="354.0" layoutY="220.0" mnemonicParsing="false" onAction="#irBuscarMonstruos" prefHeight="79.0" prefWidth="200.0" text="Buscar Monstruos">
-         <font>
-            <Font name="Onyx" size="12.0" />
-         </font>
-      </Button>
-      <Hyperlink id="twirkand" fx:id="twirkand" layoutX="20.0" layoutY="356.0" onAction="#abrirWeb" text="\@Twirkand" />
-      <Label layoutX="107.0" layoutY="56.0" text="PROJECT HUNTER">
-         <font>
-            <Font name="Papyrus" size="32.0" />
-         </font>
-      </Label>
-   </children>
-</Pane>
+<BorderPane xmlns="http://javafx.com/javafx/26"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.hunter.controllers.MonsterTableController"
+            stylesheets="@fxml/css/styles.css">
+
+    <center>
+
+        <HBox fillHeight="true">
+
+            <!-- ================= LISTA PRINCIPAL (OCUPA TODO) ================= -->
+            <TableView fx:id="tableMonstruos"
+                       HBox.hgrow="ALWAYS">
+
+                <columns>
+                    <TableColumn fx:id="id"
+             text="ID"
+             prefWidth="50"
+             maxWidth="70"
+             minWidth="40"/>
+
+<TableColumn fx:id="nombre"
+             text="NOMBRE"
+             prefWidth="250"/>
+
+<TableColumn fx:id="tipo"
+             text="TIPO"
+             prefWidth="200"/>
+
+<TableColumn fx:id="elemento"
+             text="ELEMENTO"
+             prefWidth="150"/>
+
+<TableColumn fx:id="primeraAparicion"
+             text="PRIMERA APARICION"
+             prefWidth="180"/>
+                </columns>
+
+            </TableView>
+
+            <!-- ================= PANEL DERECHO ================= -->
+            <VBox spacing="12"
+                  HBox.hgrow="NEVER"
+                  alignment="CENTER"
+                  prefWidth="180"
+                  maxWidth="200"
+                  styleClass="sidebar">
+
+                <Label text="FILTROS"/>
+
+                <Button text="TODOS"
+                        onAction="#handleLoadAll"
+                        maxWidth="Infinity"/>
+
+                <ComboBox fx:id="typeCombo"
+                          promptText="TIPO"
+                          maxWidth="Infinity"/>
+
+                <Button text="BUSCAR TIPO"
+                        onAction="#handleSearchByType"
+                        maxWidth="Infinity"/>
+
+                <TextField fx:id="nameField"
+                           promptText="NOMBRE"
+                           maxWidth="Infinity"/>
+
+                <Button text="BUSCAR"
+                        onAction="#handleSearchByName"
+                        maxWidth="Infinity"/>
+
+            </VBox>
+
+        </HBox>
+
+    </center>
+
+</BorderPane>

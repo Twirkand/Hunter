@@ -1,4 +1,4 @@
-package com.hunter.controllers;
+package com.hunter.controllers.old;
 
 import com.hunter.models.Monstruo;
 import com.hunter.navigation.Navigator;
@@ -7,6 +7,7 @@ import com.hunter.repositories.sqlite.MonstruoSqliteRepository;
 import com.hunter.services.impl.MonstruoService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,7 +16,10 @@ import java.awt.Desktop;
 import java.net.URI;
 import java.util.List;
 
-public class ListarMonstruosFX {
+public class BuscarPorTipoFX {
+
+    @FXML
+    private ComboBox<String> comboTipos;
 
     @FXML
     private TableView<Monstruo> tableMonstruos;
@@ -31,13 +35,15 @@ public class ListarMonstruosFX {
     @FXML
     private TableColumn<Monstruo, String> primeraAparicion;
 
-    private MonstruoService service;
+    private final MonstruoService service =
+            new MonstruoService(
+                    new MonstruoSqliteRepository(
+                            new SqliteConnectionManager()
+                    )
+            );
 
     @FXML
     public void initialize() {
-
-        SqliteConnectionManager manager = new SqliteConnectionManager();
-        this.service = new MonstruoService(new MonstruoSqliteRepository(manager));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -45,17 +51,35 @@ public class ListarMonstruosFX {
         elemento.setCellValueFactory(new PropertyValueFactory<>("elemento"));
         primeraAparicion.setCellValueFactory(new PropertyValueFactory<>("primeraAparicion"));
 
-        cargarDatos();
+        List<String> tipos = service.obtenerTodos()
+                .stream()
+                .map(Monstruo::getTipo)
+                .distinct()
+                .sorted()
+                .toList();
+
+        comboTipos.setItems(FXCollections.observableArrayList(tipos));
     }
 
-    private void cargarDatos() {
-        List<Monstruo> lista = service.obtenerTodos();
-        tableMonstruos.setItems(FXCollections.observableArrayList(lista));
+    @FXML
+    private void buscar() {
+
+        String tipo = comboTipos.getValue();
+
+        if (tipo == null || tipo.isBlank()) {
+            return;
+        }
+
+        tableMonstruos.setItems(
+                FXCollections.observableArrayList(
+                        service.obtenerPorTipo(tipo)
+                )
+        );
     }
 
     @FXML
     private void volver() {
-        Navigator.goTo("main.fxml");
+        Navigator.goTo("buscar_monstruos.fxml");
     }
 
     @FXML

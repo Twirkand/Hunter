@@ -1,4 +1,4 @@
-package com.hunter.controllers;
+package com.hunter.controllers.old;
 
 import com.hunter.navigation.Navigator;
 import java.awt.Desktop;

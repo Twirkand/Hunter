@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hunter.controllers.MainFX">
+   <children>
+      <Button id="botonVerMonstruos" fx:id="botonVerMonstruos" layoutX="50.0" layoutY="220.0" mnemonicParsing="false" onAction="#irVerMonstruos" prefHeight="79.0" prefWidth="200.0" text="Ver Monstruos">
+         <font>
+            <Font name="Pristina" size="12.0" />
+         </font>
+      </Button>
+      <Button id="botonBuscarMonstruos" fx:id="botonBuscarMonstruos" layoutX="354.0" layoutY="220.0" mnemonicParsing="false" onAction="#irBuscarMonstruos" prefHeight="79.0" prefWidth="200.0" text="Buscar Monstruos">
+         <font>
+            <Font name="Onyx" size="12.0" />
+         </font>
+      </Button>
+      <Hyperlink id="twirkand" fx:id="twirkand" layoutX="20.0" layoutY="356.0" onAction="#abrirWeb" text="\@Twirkand" />
+      <Label layoutX="107.0" layoutY="56.0" text="PROJECT HUNTER">
+         <font>
+            <Font name="Papyrus" size="32.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
