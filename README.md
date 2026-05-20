@@ -1,80 +1,137 @@
-# 🐉 Proyecto Hunter
+# 🐉 Hunter
 
-Aplicación desarrollada en **Java** que consiste en un **bestiario interactivo** de la saga de videojuegos *Monster Hunter*.
-
-El objetivo del proyecto es centralizar información detallada sobre todos los monstruos de la franquicia, permitiendo consultar en qué juegos aparecen, sus características y otros datos relevantes de forma estructurada y accesible.
+Aplicación de escritorio desarrollada en **JavaFX** que funciona como un **bestiario interactivo de Monster Hunter**, permitiendo consultar monstruos, juegos, tipos y otra información de forma visual, organizada y moderna.
 
 ---
 
 ## 📌 Descripción
 
-Proyecto Hunter es una aplicación enfocada en:
+**Hunter** es una aplicación creada como proyecto de aprendizaje y práctica de desarrollo multiplataforma.
 
-- 📖 Consultar monstruos de la saga
-- 🎮 Ver en qué juegos aparecen
-- 🧬 Clasificación por tipo (Wyvern, Dragón Anciano, Bestia Colmillo, etc.)
-- 📊 Organización estructurada de datos
-- 🔍 Búsqueda interactiva
+La aplicación permite explorar información sobre monstruos de la saga *Monster Hunter* mediante una interfaz gráfica desarrollada con **JavaFX**, utilizando una base de datos integrada y una arquitectura organizada siguiendo principios de programación orientada a objetos.
 
-La aplicación está desarrollada en **Java**, aplicando principios de programación orientada a objetos y estructuras de datos organizadas.
+Actualmente el proyecto cuenta con funcionalidades reales de búsqueda, visualización y persistencia de datos.
+
+---
+
+## ✨ Características actuales
+
+- ✅ Interfaz gráfica moderna con JavaFX
+- ✅ Sistema de búsqueda de monstruos
+- ✅ Base de datos integrada con SQLite
+- ✅ Listado dinámico de monstruos
+- ✅ Sistema de imágenes
+- ✅ Arquitectura organizada por controladores y modelos
+- ✅ Compatibilidad con Java 17
+- ✅ Empaquetado portable mediante AppImage
+- ✅ Uso de Maven para gestión del proyecto
+
+---
+
+## 🧩 Tecnologías utilizadas
+
+- ☕ Java 17
+- 🎨 JavaFX
+- 🗄️ SQLite
+- 📦 Maven
+- 🖼️ Scene Builder
+- 🐧 Linux / AppImage
+- 🔀 Git y GitHub
+
+---
+
+## 🏗️ Arquitectura del proyecto
+
+El proyecto sigue una estructura modular basada en:
+
+- **Controllers** → lógica de interfaz
+- **Models** → representación de datos
+- **Database** → acceso y gestión SQLite
+- **Resources** → imágenes, CSS y FXML
+- **Utils** → utilidades auxiliares
+
+---
+
+## 🚀 Funcionalidades
+
+| Funcionalidad | Estado |
+|---|---|
+| Listado de monstruos | ✅ |
+| Búsqueda por nombre | ✅ |
+| Interfaz gráfica | ✅ |
+| Base de datos funcional | ✅ |
+| Sistema de imágenes | ✅ |
+| Relación monstruos ↔ juegos | 🚧 |
+| Filtros avanzados | 🚧 |
+| Estadísticas | ❌ |
+| Sistema de favoritos | ❌ |
+| Exportación de datos | ❌ |
+
+---
+
+## 📷 Capturas
+
+*(Próximamente)*
+
+---
+
+## ⚙️ Instalación
+
+### Requisitos
+
+- Java 17 o superior
+- Maven
+
+### Clonar el repositorio
+
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd Hunter
+```
+
+### Ejecutar el proyecto
+
+```bash
+mvn clean javafx:run
+```
+
+---
+
+## 📦 Generar versión portable
+
+```bash
+mvn clean package
+```
+
+Posteriormente se puede empaquetar como AppImage.
 
 ---
 
 ## 🎯 Objetivos del proyecto
 
-- Practicar y consolidar conocimientos en **Java**
-- Aplicar **POO (Programación Orientada a Objetos)**
-- Diseñar una estructura de datos escalable
-- Simular una aplicación real orientada a usuarios
-- Mejorar la organización y arquitectura del código
+- Mejorar habilidades en Java y JavaFX
+- Aplicar arquitectura MVC
+- Practicar acceso a bases de datos
+- Crear una aplicación visual completa
+- Aprender empaquetado y distribución de aplicaciones Linux
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## 🛠️ Estado del proyecto
 
-- ☕ Java
-- 📦 Colecciones y estructuras de datos
-- 🧠 Programación Orientada a Objetos
-- (Posible futura implementación con base de datos)
+🚧 En desarrollo activo
 
----
-
-## 🚀 Funcionalidades previstas
-
-- Listado completo de monstruos
-- Filtro por generación o juego
-- Visualización detallada de cada monstruo
-- Relación monstruo ↔ juegos
-- Sistema de búsqueda
-- (Futuro) Interfaz gráfica
-
----
-
-## 📈 Futuras mejoras
-
-- Implementación con base de datos (MySQL / SQLite)
-- Interfaz gráfica con JavaFX o Swing
-- Exportación de datos
-- Sistema de favoritos
-- Estadísticas y comparativas entre monstruos
-
----
-
-## 🧩 Estado del proyecto
-
-🛠️ En desarrollo
-
-Este proyecto se encuentra actualmente en fase de diseño y planificación de arquitectura.
+El proyecto continúa evolucionando con nuevas funcionalidades, mejoras visuales y optimización de arquitectura.
 
 ---
 
 ## 👤 Autor
 
-**Twirkand**  
-Estudiante de Desarrollo de Aplicaciones Multiplataforma  
+**Nauzet Torres Tejera (Twirkand)**  
+CFGS Desarrollo de Aplicaciones Multiplataforma
 
 ---
 
 ## 📜 Licencia
 
-Este proyecto es de uso educativo y personal.
+Proyecto desarrollado con fines educativos y personales.
