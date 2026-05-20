@@ -97,16 +97,6 @@ mvn clean javafx:run
 
 ---
 
-## 📦 Generar versión portable
-
-```bash
-mvn clean package
-```
-
-Posteriormente se puede empaquetar como AppImage.
-
----
-
 ## 🎯 Objetivos del proyecto
 
 - Mejorar habilidades en Java y JavaFX
@@ -127,7 +117,7 @@ El proyecto continúa evolucionando con nuevas funcionalidades, mejoras visuales
 
 ## 👤 Autor
 
-**Nauzet Torres Tejera (Twirkand)**  
+**Twirkand (N. Torres)**  
 CFGS Desarrollo de Aplicaciones Multiplataforma
 
 ---
