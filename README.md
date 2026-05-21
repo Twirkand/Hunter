@@ -125,3 +125,4 @@ CFGS Desarrollo de Aplicaciones Multiplataforma
 ## 📜 Licencia
 
 Proyecto desarrollado con fines educativos y personales.
+
